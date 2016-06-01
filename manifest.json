@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "Kanization",
+  "name": "Kananization",
   "version": "1.0",
  
   "description": "Transliterates english words into japanese kana",
@@ -11,14 +11,18 @@
   
   "applications": {
     "gecko": {
-      "id": "kanization@pugnator",
+      "id": "kananization@nonamegarage.com",
       "strict_min_version": "45.0"
     }
   },
   
   "browser_action": {
     "default_icon": "icons/kana.png",
-    "default_title": "Beastify"    
+    "default_title": "Kananization"    
+  },
+  
+  "options_ui": {
+      "page": "options.html"
   },
 
   "content_scripts": [
