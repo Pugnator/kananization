@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Kananization",
-  "version": "1.0",
+  "version": "1.1",
  
   "description": "Transliterates english words into japanese kana on button press",
   "icons": {
@@ -10,7 +10,9 @@
   },
 
   "permissions": [
-  "activeTab"
+  "contextMenus",
+  "activeTab",
+  "storage"
   ],
   
   "applications": {
@@ -22,7 +24,7 @@
   
   "browser_action": {
     "default_icon": "icons/kana.png",
-    "default_title": "Kananization"    
+    "default_title": "Kananize"    
   },
  
   "content_scripts": [

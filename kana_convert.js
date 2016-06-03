@@ -19,35 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var romajiCapital = [
-    ["A", "エー"],
-    ["B", "ビー"],
-    ["C", "シー"],
-    ["D", "ディー"],
-    ["E", "イー"],
-    ["F", "エフ"],
-    ["G", "ジー"],
-    ["H", "エイチ"],
-    ["I", "アイ"],
-    ["J", "ジェー"],
-    ["K", "ケー"],
-    ["L", "エル"],
-    ["M", "エム"],
-    ["N", "エヌ"],
-    ["O", "オー"],
-    ["P", "ピー"],
-    ["Q", "キュー"],
-    ["R", "アール"],
-    ["S", "エス"],
-    ["T", "ティー"],
-    ["U", "ユー"],
-    ["V", "ヴイ"],
-    ["W", "ダブリュー"],
-    ["X", "エックス"],
-    ["Y", "ワイ"],
-    ["Z", "ゼット"],
-]
-
 var rosiajiHiraganaSingle = [
     ["あ", "а"],
     ["い", "и"],
@@ -58,8 +29,8 @@ var rosiajiHiraganaSingle = [
     ["ゆ", "ю"],
     ["よ", "ё"],
     ["を", "о"],
-    ["ん", "н"],
-]
+    ["ん", "н"]
+];
 
 var rosiajiHiraganaDouble = [
     ["か", "ка"],
@@ -158,7 +129,7 @@ var rosiajiHiraganaDouble = [
     ["ぴゃ", "пя"],
     ["ぴゅ", "пю"],
     ["ぴょ", "пё"],
-    ["わ", "ва"],
+    ["わ", "ва"]
 ];
 
 var rosiajiKatakanaSingle = [
@@ -171,7 +142,7 @@ var rosiajiKatakanaSingle = [
     ["ユ", "ю"],
     ["ヨ", "ё"],
     ["ヲ", "о"],
-    ["ン", "н"],
+    ["ン", "н"]
 ];
 
 var rosiajiKatakanaDouble = [
@@ -271,270 +242,79 @@ var rosiajiKatakanaDouble = [
     ["ピャ", "пя"],
     ["ピュ", "пю"],
     ["ピョ", "пё"],
-    ["ワ", "ва"],
+    ["ワ", "ва"]
 ];
 
-var romajiHiraganaSingle = [
-    ["あ", "a"],
-    ["い", "i"],
-    ["う", "u"],
-    ["え", "e"],
-    ["お", "o"],
-    ["や", "ya"],
-    ["ゆ", "yu"],
-    ["よ", "yo"],
-    ["ん", "n"],
-];
+var Mode = "hiragana";
+var SimpleMode = false;
 
-var romajiHiraganaDouble = [
-    ["か", "ka"],
-    ["き", "ki"],
-    ["く", "ku"],
-    ["け", "ke"],
-    ["こ", "ko"],
-    ["きゃ", "kya"],
-    ["きゅ", "kyu"],
-    ["きょ", "kyo"],
-    ["さ", "sa"],
-    ["し", "shi"],
-    ["す", "su"],
-    ["せ", "se"],
-    ["そ", "so"],
-    ["しゃ", "sha"],
-    ["しゅ", "shu"],
-    ["しょ", "sho"],
-    ["た", "ta"],
-    ["ち", "chi"],
-    ["つ", "tsu"],
-    ["て", "te"],
-    ["と", "to"],
-    ["ちゃ", "cha"],
-    ["ちゅ", "chu"],
-    ["ちょ", "cho"],
-    ["な", "na"],
-    ["に", "ni"],
-    ["ぬ", "nu"],
-    ["ね", "ne"],
-    ["の", "no"],
-    ["にゃ", "nya"],
-    ["にゅ", "nyu"],
-    ["にょ", "nyo"],
-    ["は", "ha"],
-    ["ひ", "hi"],
-    ["ふ", "fu"],
-    ["へ", "he"],
-    ["ほ", "ho"],
-    ["ひゃ", "hya"],
-    ["ひゅ", "hyu"],
-    ["ひょ", "hyo"],
-    ["ま", "ma"],
-    ["み", "mi"],
-    ["む", "mu"],
-    ["め", "me"],
-    ["も", "mo"],
-    ["みゃ", "mya"],
-    ["みゅ", "myu"],
-    ["みょ", "myo"],
-    ["ら", "ra"],
-    ["り", "ri"],
-    ["る", "ru"],
-    ["れ", "re"],
-    ["ろ", "ro"],
-    ["りゃ", "rya"],
-    ["りゅ", "ryu"],
-    ["りょ", "ryo"],
-    ["が", "ga"],
-    ["ぎ", "gi"],
-    ["ぐ", "gu"],
-    ["げ", "ge"],
-    ["ご", "go"],
-    ["ぎゃ", "gya"],
-    ["ぎゅ", "gyu"],
-    ["ぎょ", "gyo"],
-    ["ざ", "za"],
-    ["じ", "ji"],
-    ["ず", "zu"],
-    ["ぜ", "ze"],
-    ["ぞ", "zo"],
-    ["じゃ", "ja"],
-    ["じゅ", "ju"],
-    ["じょ", "jo"],
-    ["だ", "da"],
-    ["ぢ", "ji"],
-    ["づ", "zu"],
-    ["で", "de"],
-    ["ど", "do"],
-    ["ぢゃ", "ja"],
-    ["ぢゅ", "ju"],
-    ["ぢょ", "jo"],
-    ["ば", "ba"],
-    ["び", "bi"],
-    ["ぶ", "bu"],
-    ["べ", "be"],
-    ["ぼ", "bo"],
-    ["びゃ", "bya"],
-    ["びゅ", "byu"],
-    ["びょ", "byo"],
-    ["ぱ", "pa"],
-    ["ぴ", "pi"],
-    ["ぷ", "pu"],
-    ["ぺ", "pe"],
-    ["ぽ", "po"],
-    ["ぴゃ", "pya"],
-    ["ぴゅ", "pyu"],
-    ["ぴょ", "pyo"],
-    ["わ", "wa"],
-    ["を", "wo"],
-];
-
-
-var romajiKatakanaSingle = [
-    ["ア", "a"],
-    ["イ", "i"],
-    ["ウ", "u"],
-    ["エ", "e"],
-    ["オ", "o"],
-    ["ン", "n"],
-];
-
-var romajiKatakanaDouble = [
-    ["ヤ", "ya"],
-    ["ユ", "yu"],
-    ["ヨ", "yo"],
-    ["カ", "ka"],
-    ["キ", "ki"],
-    ["ク", "ku"],
-    ["ケ", "ke"],
-    ["コ", "ko"],
-    ["キャ", "kya"],
-    ["キュ", "kyu"],
-    ["キョ", "kyo"],
-    ["サ", "sa"],
-    ["シ", "shi"],
-    ["ス", "su"],
-    ["セ", "se"],
-    ["ソ", "so"],
-    ["シャ", "sha"],
-    ["シュ", "shu"],
-    ["ショ", "sho"],
-    ["タ", "ta"],
-    ["チ", "chi"],
-    ["ツ", "tsu"],
-    ["テ", "te"],
-    ["ト", "to"],
-    ["チャ", "cha"],
-    ["チュ", "chu"],
-    ["チョ", "cho"],
-    ["ナ", "na"],
-    ["ニ", "ni"],
-    ["ヌ", "nu"],
-    ["ネ", "ne"],
-    ["ノ", "no"],
-    ["ニャ", "nya"],
-    ["ニュ", "nyu"],
-    ["ニョ", "nyo"],
-    ["ハ", "ha"],
-    ["ヒ", "hi"],
-    ["フ", "fu"],
-    ["ヘ", "he"],
-    ["ホ", "ho"],
-    ["ヒャ", "hya"],
-    ["ヒュ", "hyu"],
-    ["ヒョ", "hyo"],
-    ["マ", "ma"],
-    ["ミ", "mi"],
-    ["ム", "mu"],
-    ["メ", "me"],
-    ["モ", "mo"],
-    ["ミャ", "mya"],
-    ["ミュ", "myu"],
-    ["ミョ", "myo"],
-    ["ラ", "ra"],
-    ["リ", "ri"],
-    ["ル", "ru"],
-    ["レ", "re"],
-    ["ロ", "ro"],
-    ["リャ", "rya"],
-    ["リュ", "ryu"],
-    ["リョ", "ryo"],
-    ["ガ", "ga"],
-    ["ギ", "gi"],
-    ["グ", "gu"],
-    ["ゲ", "ge"],
-    ["ゴ", "go"],
-    ["ギャ", "gya"],
-    ["ギュ", "gyu"],
-    ["ギョ", "gyo"],
-    ["ザ", "za"],
-    ["ジ", "ji"],
-    ["ズ", "zu"],
-    ["ゼ", "ze"],
-    ["ゾ", "zo"],
-    ["ジャ", "ja"],
-    ["ジュ", "ju"],
-    ["ジョ", "jo"],
-    ["ダ", "da"],
-    ["ヂ", "ji"],
-    ["ヅ", "zu"],
-    ["デ", "de"],
-    ["ド", "do"],
-    ["ヂャ", "ja"],
-    ["ヂュ", "ju"],
-    ["ヂョ", "jo"],
-    ["バ", "ba"],
-    ["ビ", "bi"],
-    ["ブ", "bu"],
-    ["ベ", "be"],
-    ["ボ", "bo"],
-    ["ビャ", "bya"],
-    ["ビュ", "byu"],
-    ["ビョ", "byo"],
-    ["パ", "pa"],
-    ["ピ", "pi"],
-    ["プ", "pu"],
-    ["ペ", "pe"],
-    ["ポ", "po"],
-    ["ピャ", "pya"],
-    ["ピュ", "pyu"],
-    ["ピョ", "pyo"],
-    ["ワ", "wa"],
-    ["ヲ", "wo"],
-];
+function getSettings() 
+{
+  console.info("Reading settings");
+  chrome.storage.local.get('mode', function (res) 
+  {
+	if("undefined" === res)
+	{
+		return;
+	}	
+    Mode = res.mode;
+  });
+  
+  chrome.storage.local.get('simple', function (res) 
+  {
+	console.info("Simple: ", res.simple);
+	if("undefined" === res)
+	{
+		return;
+	}	    
+	console.info("Simple mode was %s", true == SimpleMode ? "enabled" : "disabled");
+	if("true" === res.simple)
+	{
+		SimpleMode = true;
+	}
+	console.info("Simple mode is now %s", true == SimpleMode ? "enabled" : "disabled");
+  });
+}
 
 function convert2hiraganaRU(text) 
 {
-  for (var i = 0; i < rosiajiHiraganaDouble.length; i++) 
-  {        
-    text = text.replace(new RegExp(rosiajiHiraganaDouble[i][1], 'g'), rosiajiHiraganaDouble[i][0]);
+  if(false == SimpleMode)
+  {  
+	for (var i = 0; i < rosiajiHiraganaDouble.length; i++) 
+	{        
+		text = text.replace(new RegExp(rosiajiHiraganaDouble[i][1], 'g'), rosiajiHiraganaDouble[i][0]);
+	}
   }
-  for (var i = 0; i < rosiajiHiraganaSingle.length; i++) 
+  for (i = 0; i < rosiajiHiraganaSingle.length; i++) 
   {        
     text = text.replace(new RegExp(rosiajiHiraganaSingle[i][1], 'g'), rosiajiHiraganaSingle[i][0]);
   }    
-  return text
+  return text;
 }
 
 function convert2katakanaRU(text) 
 {
-  for (var i = 0; i < rosiajiKatakanaDouble.length; i++) 
-  {        
-    text = text.replace(new RegExp(rosiajiKatakanaDouble[i][1], 'g'), rosiajiKatakanaDouble[i][0]);
+  if(false == SimpleMode)
+  {
+	for (var i = 0; i < rosiajiKatakanaDouble.length; i++) 
+	{        
+		text = text.replace(new RegExp(rosiajiKatakanaDouble[i][1], 'g'), rosiajiKatakanaDouble[i][0]);
+	}
   }
-  for (var i = 0; i < rosiajiKatakanaSingle.length; i++) 
+  for (i = 0; i < rosiajiKatakanaSingle.length; i++) 
   {        
     text = text.replace(new RegExp(rosiajiKatakanaSingle[i][1], 'g'), rosiajiKatakanaSingle[i][0]);
   }    
-  return text
+  return text;
 }
 
-function convertPage()
+function getpageTreeWalker()
 {
-  console.log("Converting");
   var treeWalker = document.createTreeWalker(
   document.body, NodeFilter.SHOW_TEXT,
       {acceptNode: function(node) 
           {
-              if(0 == node.textContent.length)
+              if(0 === node.textContent.length)
               {
                   return NodeFilter.FILTER_SKIP;
               }
@@ -542,16 +322,55 @@ function convertPage()
           }
       }, 
   false);
+  return treeWalker;
+}
+
+function convertPage()
+{
+  console.info("Converting the page");
+  
+  var treeWalker = getpageTreeWalker();
 
   while(treeWalker.nextNode()) 
   {
-    treeWalker.currentNode.textContent = convert2hiraganaRU(treeWalker.currentNode.textContent);
+	switch(Mode)
+	{
+		case "katakana":
+			treeWalker.currentNode.textContent = convert2katakanaRU(treeWalker.currentNode.textContent);
+			break;
+		case "hiragana":
+			treeWalker.currentNode.textContent = convert2hiraganaRU(treeWalker.currentNode.textContent);
+			break;	
+		default:
+		break;	
+	}    
   }
 }
 
 //##############################################
 
+getSettings();
+
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) 
 {
-  convertPage();
+  switch(msg.kana)
+  {		
+	case "convert-page":
+		convertPage();		
+		break;  
+	case "katakana":	
+		Mode = msg.kana;
+		chrome.storage.local.set({mode: Mode});
+		break;
+	case "hiragana":		
+		Mode = msg.kana;
+		chrome.storage.local.set({mode: Mode});
+		break;
+	case "simplemode":
+		SimpleMode ^= 1;
+		chrome.storage.local.set({simple: true == SimpleMode ? "true" : "false"});
+		break;	
+	default:
+		break;
+  }
 });
