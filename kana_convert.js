@@ -247,43 +247,89 @@ var rosiajiKatakanaDouble = [
 
 var Mode = "hiragana";
 var SimpleMode = false;
+var DEBUG = true;
+
+if (!DEBUG)
+{
+    if (!window.console) window.console = {};
+    var methods = ["log", "debug", "warn", "info", "error"];
+    for(var i=0;i<methods.length;i++)
+    {
+      console[methods[i]] = function(){};
+    }
+}
+
+function storageAvailable(type) 
+{
+  try 
+  {
+    var storage = window[type],
+      x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  }
+  catch(e) 
+  {
+    return false;
+  }
+}
 
 function getSettings() 
 {
-  console.info("Reading settings");
-  chrome.storage.local.get('mode', function (res) 
+  console.info("Reading settings in the content script");
+  try
   {
-	if("undefined" === res)
-	{
-		return;
-	}	
-    Mode = res.mode;
-  });
-  
-  chrome.storage.local.get('simple', function (res) 
+    console.info("chrome: ", chrome);
+    chrome.storage.local.get('mode', function (res) 
+    {  
+      if ("undefined" === res)
+      {
+        console.info("Mode settings is undefined");
+        return;
+      } 
+      console.info("Mode settings is ", res.mode);
+      Mode = res.mode;    
+    });
+  }
+  catch (e)
   {
-	console.info("Simple: ", res.simple);
-	if("undefined" === res)
-	{
-		return;
-	}	    
-	console.info("Simple mode was %s", true == SimpleMode ? "enabled" : "disabled");
-	if("true" === res.simple)
-	{
-		SimpleMode = true;
-	}
-	console.info("Simple mode is now %s", true == SimpleMode ? "enabled" : "disabled");
-  });
+    console.error("Error occured : %s", e.message);
+  }
+  console.info("Finished reading mode settings");
+
+  try
+  {
+    chrome.storage.local.get('simple', function (res) 
+    {
+      console.info("Simple: ", res.simple);
+      if ("undefined" === res)
+      {
+        return;
+      }     
+      console.info("Simple mode was %s", true == SimpleMode ? "enabled" : "disabled");
+      if("true" === res.simple)
+      {
+        SimpleMode = true;
+      }
+      console.info("Simple mode is now %s", true == SimpleMode ? "enabled" : "disabled");
+    });
+  }
+  catch(e)
+  {
+    console.error("Error occured: %s", e.message);
+  }
+  console.info("Finished reading settings: Mode: %s. simple mode: %s", Mode, true == SimpleMode ? "true" : "false");
 }
 
 function convert2hiraganaRU(text) 
 {
-  if(false == SimpleMode)
+  if (false == SimpleMode)
   {  
-	for (var i = 0; i < rosiajiHiraganaDouble.length; i++) 
-	{        
-		text = text.replace(new RegExp(rosiajiHiraganaDouble[i][1], 'g'), rosiajiHiraganaDouble[i][0]);
-	}
+  for (var i = 0; i < rosiajiHiraganaDouble.length; i++) 
+  {        
+    text = text.replace(new RegExp(rosiajiHiraganaDouble[i][1], 'g'), rosiajiHiraganaDouble[i][0]);
+  }
   }
   for (i = 0; i < rosiajiHiraganaSingle.length; i++) 
   {        
@@ -294,12 +340,12 @@ function convert2hiraganaRU(text)
 
 function convert2katakanaRU(text) 
 {
-  if(false == SimpleMode)
+  if (false == SimpleMode)
   {
-	for (var i = 0; i < rosiajiKatakanaDouble.length; i++) 
-	{        
-		text = text.replace(new RegExp(rosiajiKatakanaDouble[i][1], 'g'), rosiajiKatakanaDouble[i][0]);
-	}
+  for (var i = 0; i < rosiajiKatakanaDouble.length; i++) 
+  {        
+    text = text.replace(new RegExp(rosiajiKatakanaDouble[i][1], 'g'), rosiajiKatakanaDouble[i][0]);
+  }
   }
   for (i = 0; i < rosiajiKatakanaSingle.length; i++) 
   {        
@@ -314,7 +360,7 @@ function getpageTreeWalker()
   document.body, NodeFilter.SHOW_TEXT,
       {acceptNode: function(node) 
           {
-              if(0 === node.textContent.length)
+              if (0 === node.textContent.length)
               {
                   return NodeFilter.FILTER_SKIP;
               }
@@ -333,44 +379,54 @@ function convertPage()
 
   while(treeWalker.nextNode()) 
   {
-	switch(Mode)
-	{
-		case "katakana":
-			treeWalker.currentNode.textContent = convert2katakanaRU(treeWalker.currentNode.textContent);
-			break;
-		case "hiragana":
-			treeWalker.currentNode.textContent = convert2hiraganaRU(treeWalker.currentNode.textContent);
-			break;	
-		default:
-		break;	
-	}    
+  switch(Mode)
+  {
+    case "katakana":
+      treeWalker.currentNode.textContent = convert2katakanaRU(treeWalker.currentNode.textContent);
+      break;
+    case "hiragana":
+      treeWalker.currentNode.textContent = convert2hiraganaRU(treeWalker.currentNode.textContent);
+      break;  
+    default:
+    break;  
+  }    
   }
 }
 
 //##############################################
 
-getSettings();
+if (storageAvailable('localStorage')) 
+{
+  console.info("Local storage is available");
+  getSettings();  
+}
+else 
+{
+  console.error("No local storage available");
+}
 
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) 
 {
   switch(msg.kana)
-  {		
-	case "convert-page":
-		convertPage();		
-		break;  
-	case "katakana":	
-		Mode = msg.kana;
-		chrome.storage.local.set({mode: Mode});
-		break;
-	case "hiragana":		
-		Mode = msg.kana;
-		chrome.storage.local.set({mode: Mode});
-		break;
-	case "simplemode":
-		SimpleMode ^= 1;
-		chrome.storage.local.set({simple: true == SimpleMode ? "true" : "false"});
-		break;	
-	default:
-		break;
+  {   
+  case "convert-page":
+    convertPage();    
+    break;  
+  case "katakana":  
+    Mode = msg.kana;
+    chrome.storage.local.set({mode: Mode});
+    break;
+  case "hiragana":    
+    Mode = msg.kana;
+    chrome.storage.local.set({mode: Mode});
+    break;
+  case "simplemode":
+    SimpleMode ^= 1;
+    chrome.storage.local.set({simple: true == SimpleMode ? "true" : "false"});
+    break;  
+  default:
+    break;
   }
+  console.info("Message: %s", msg.kanalog);
+  
 });
